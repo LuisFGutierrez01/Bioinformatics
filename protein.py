@@ -13,7 +13,7 @@ map = [peas, mouse]
 # graph of peas x mouse array of ints 
 graph = [[int for i in range(len(peas))] for j in range(len(mouse))]
 
-#initializes the graph with the initial base cases, 0, -1, -2, ...
+#initializes the graph with the initial base cases with 0, -1, -2, ...
 for i in range(len(mouse)):
     graph[i][0] = -i
 for i in range(len(peas)):
