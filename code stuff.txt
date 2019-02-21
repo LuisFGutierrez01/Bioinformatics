@@ -1,0 +1,55 @@
+def find_lower(x = 10 , y = 10):
+
+    if y-1 < 0 and x-1 < 0:     #check if youre going out of bounds manually
+        return None             #once you reach the corner, youre at the base case
+
+    else:                       #need to check if youre at the edge since array when negative
+        if y-1 < 0 and x-1 > 0: #checks if youre are the top edge, vertical gap
+            bio.peas_string += proteins[0][x]
+            bio.gap += 1
+            return find_lower(x-1,y)
+            
+        elif y-1 > 0 and x-1 < 0: #checks if youre at the left edge, horozintal gap
+            bio.mouse_string += proteins[1][y]
+            bio.gap +=1
+            return find_lower(x,y-1)
+
+
+        else:                   #then youre in the middle of the graph
+            upper = graph[y-1][x]
+            left = graph[y][x-1]
+            diagonal = graph[y-1][x-1]
+
+            ans = max(upper, left, diagonal)
+
+            #checks if youre matching in the middle of the graph
+            if ans == diagonal and proteins[0][x-1] == proteins[1][y-1]: 
+                bio.matching += 1
+                bio.mouse_string += proteins[1][y]
+                bio.peas_string += proteins[0][x]
+                return find_lower(x-1,y-1)
+
+            #checks if they are mismatching in the middle of the graph
+            elif ans == diagonal and proteins[0][x-1] != proteins[1][y-1]:
+                bio.mismatch += 1
+                bio.mouse_string += proteins[1][y-1]
+                bio.peas_string += proteins[0][x-1]
+                return find_lower(x-1,y-1)
+
+            #checks if your left is biggest
+            elif ans == left:
+                bio.gap += 1
+                bio.mouse_string += "-"
+                bio.peas_string += proteins[0][x]
+                return find_lower(x-1,y)
+
+            #checks if upper is biggest
+            elif ans == upper:
+                bio.gap +=1
+                bio.mouse_string += proteins[1][y]
+                bio.peas_string += "-"
+                return find_lower(x-1,y)
+
+            else:
+                print("you done fucked up you done fucked up you done fucked up you done fucked up ")
+                return None #it will quit out if you fucked up
